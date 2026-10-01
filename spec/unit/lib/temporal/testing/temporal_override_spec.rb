@@ -1,6 +1,6 @@
 require 'temporal/testing'
 require 'temporal/workflow'
-require 'temporal/api/errordetails/v1/message_pb'
+require 'temporalio/api/errordetails/v1/message'
 
 describe Temporal::Testing::TemporalOverride do
   let(:client) { Temporal::Client.new(config) }
@@ -25,7 +25,7 @@ describe Temporal::Testing::TemporalOverride do
   context 'when testing mode is disabled' do
     describe 'Temporal.start_workflow' do
       let(:connection) { instance_double('Temporal::Connection::GRPC') }
-      let(:response) { Temporal::Api::WorkflowService::V1::StartWorkflowExecutionResponse.new(run_id: 'xxx') }
+      let(:response) { Temporalio::Api::WorkflowService::V1::StartWorkflowExecutionResponse.new(run_id: 'xxx') }
 
       before { allow(Temporal::Connection).to receive(:generate).and_return(connection) }
       after { client.remove_instance_variable(:@connection) rescue NameError }

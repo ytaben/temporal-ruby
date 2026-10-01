@@ -1,6 +1,6 @@
 require 'temporal/testing'
 require 'temporal/workflow'
-require 'temporal/api/errordetails/v1/message_pb'
+require 'temporalio/api/errordetails/v1/message'
 require 'time'
 
 describe Temporal::Testing::LocalWorkflowContext do

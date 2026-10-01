@@ -1,6 +1,6 @@
 require 'oj'
-require 'gen/temporal/api/common/v1/message_pb'
-require 'gen/temporal/api/command/v1/message_pb'
+require 'temporalio/api/common/v1/message'
+require 'temporalio/api/command/v1/message'
 
 module Temporal
   module Connection

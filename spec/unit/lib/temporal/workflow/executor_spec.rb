@@ -52,13 +52,16 @@ describe Temporal::Workflow::Executor do
     end
 
     it 'generates workflow metadata' do
-      allow(Temporal::Metadata::Workflow).to receive(:new).and_call_original
-      payload = Temporal::Api::Common::V1::Payload.new(
+      allow(Temporal::Metadata::Workflow).to receive(:new).and_wrap_original do |original, *args, **kwargs|
+        kwargs = args.pop if kwargs.empty? && args.last.is_a?(Hash)
+        original.call(*args, **kwargs)
+      end
+      payload = Temporalio::Api::Common::V1::Payload.new(
         metadata: { 'encoding' => 'json/plain' },
         data: '"bar"'.b
       )
       header = 
-        Google::Protobuf::Map.new(:string, :message, Temporal::Api::Common::V1::Payload, { 'Foo' => payload })
+        Google::Protobuf::Map.new(:string, :message, Temporalio::Api::Common::V1::Payload, { 'Foo' => payload })
       workflow_started_event.workflow_execution_started_event_attributes.header = 
         Fabricate(:api_header, fields: header)
 
