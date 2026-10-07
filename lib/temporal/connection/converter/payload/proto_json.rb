@@ -25,7 +25,8 @@ module Temporal
                 'encoding' => ENCODING,
                 'messageType' => data.class.descriptor.name,
               },
-              data: data.to_json,
+              # Payload#data is a bytes field; non-ASCII JSON must be binary-encoded
+              data: data.to_json.b,
             )
           end
         end

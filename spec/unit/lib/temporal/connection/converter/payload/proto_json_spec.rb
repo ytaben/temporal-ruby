@@ -15,6 +15,15 @@ describe Temporal::Connection::Converter::Payload::ProtoJSON do
 
       expect(subject.from_payload(subject.to_payload(input))).to eq(input)
     end
+
+    it 'converts messages with non-ASCII strings' do
+      input = Temporalio::Api::WorkflowService::V1::DescribeNamespaceRequest.new(namespace: 'café 🌱')
+
+      payload = subject.to_payload(input)
+
+      expect(payload.data.encoding).to eq(Encoding::BINARY)
+      expect(subject.from_payload(payload)).to eq(input)
+    end
   end
 
   it 'skips if not proto message' do

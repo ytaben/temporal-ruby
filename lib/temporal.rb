@@ -12,6 +12,10 @@ require 'temporal/workflow/errors'
 module Temporal
   extend SingleForwardable
 
+  # Protobuf classes come from the temporalio gem (Temporalio::Api) instead of
+  # vendored Temporal::Api classes, so this gem can be loaded alongside temporalio.
+  SHARED_PROTOBUFS = true
+
   def_delegators :default_client, #target
                  :start_workflow,
                  :schedule_workflow,
